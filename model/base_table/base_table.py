@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
-
 Base = declarative_base()
 db = SQLAlchemy(model_class=Base)
 
@@ -27,13 +26,10 @@ class Email(Base):
         'email_subject': self.email_subject,
         'email_content': self.email_content,
         'timestamp': self.timestamp,
-        'created_at': self.created_at.isoformat(),
+        'timestamp_datetime': datetime.fromtimestamp(self.timestamp).strftime("%Y-%m-%d %H:%M:%S"),
+        'created_at': self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
         'is_sended': self.is_sended,
         'time_send': datetime.fromtimestamp(self.time_send).strftime("%Y-%m-%d %H:%M:%S"),
         'is_canceled': self.is_canceled,
         'time_cancel': datetime.fromtimestamp(self.time_cancel).strftime("%Y-%m-%d %H:%M:%S")
         }
-
-def give_pointer_db():
-    global db
-    return {"DB":db}

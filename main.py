@@ -5,13 +5,12 @@ from model.base_table.base_table import *
 from datetime import datetime
 from time import gmtime, strftime
 
+
 app = Flask(__name__)
 
 
 data_config = read_config("config/base_config.ini")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + data_config["SQLLITE_FILE_NAME"]
-global_var = give_pointer_db()
-db = global_var["DB"]
 db.init_app(app)
 
 @app.template_filter('datetimeformat')
@@ -33,6 +32,7 @@ def save_emails():
 
         # Create an Email object
         email = Email(
+            created_at=datetime.now(),
             event_id=event_id,
             email_subject=email_subject,
             email_content=email_content,
@@ -43,7 +43,7 @@ def save_emails():
         db.session.add(email)
         db.session.commit()
 
-        return jsonify({"error":0, 'message': 'Email saved and scheduled successfully!', 'id': email.id}), 201
+        return jsonify({"error":0, 'message': 'Email saved and scheduled successfully!', 'id': email.id, "data":email.return_dict()}), 201
     
     except Exception as e:
         return jsonify({"error":1, 'message': str(e)}), 400
