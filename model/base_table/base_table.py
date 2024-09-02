@@ -12,6 +12,7 @@ class Email(Base):
     event_id = db.Column(db.Integer, nullable=False)
     email_subject = db.Column(db.String(255), nullable=False)
     email_content = db.Column(db.Text, nullable=False)
+    email_receipt = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.Integer, nullable=False)  # Timestamp int for schedule send
     created_at = db.Column(db.DateTime, default=datetime.now())
     is_sended = db.Column(db.Boolean, default=False, nullable=False)  # flag is finish sent
@@ -23,6 +24,7 @@ class Email(Base):
         return {
         'id': self.id,
         'event_id': self.event_id,
+        'email_receipt': self.email_receipt,
         'email_subject': self.email_subject,
         'email_content': self.email_content,
         'timestamp': self.timestamp,
@@ -31,5 +33,5 @@ class Email(Base):
         'is_sended': self.is_sended,
         'time_send': datetime.fromtimestamp(self.time_send).strftime("%Y-%m-%d %H:%M:%S"),
         'is_canceled': self.is_canceled,
-        'time_cancel': datetime.fromtimestamp(self.time_cancel).strftime("%Y-%m-%d %H:%M:%S")
+        'time_cancel': datetime.fromtimestamp(self.time_cancel).strftime("%Y-%m-%d %H:%M:%S"),
         }

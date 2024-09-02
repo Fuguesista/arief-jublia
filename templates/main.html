@@ -13,6 +13,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Receipt</th>
                     <th>Event ID</th>
                     <th>Subject</th>
                     <th>Content</th>
@@ -26,6 +27,7 @@
                 {% for email in emails %}
                 <tr>
                     <td>{{ email.id }}</td>
+                    <td>{{ email.email_receipt }}</td>
                     <td>{{ email.event_id }}</td>
                     <td>{{ email.email_subject }}</td>
                     <td>{{ email.email_content }}</td>

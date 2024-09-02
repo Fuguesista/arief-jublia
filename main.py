@@ -1,4 +1,3 @@
-from model.scheduller_mailler.scheduller_mailler import *
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from config.read_config import read_config
 from model.base_table.base_table import *
@@ -26,6 +25,7 @@ def save_emails():
         email_subject = request.form['email_subject']
         email_content = request.form['email_content']
         timestamp = request.form['timestamp']
+        email_receipt = request.form['email_receipt']
 
         timestamp = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
         timestamp_int = int(timestamp.timestamp())
@@ -36,6 +36,7 @@ def save_emails():
             event_id=event_id,
             email_subject=email_subject,
             email_content=email_content,
+            email_receipt=email_receipt,
             timestamp=timestamp_int  # Store as Unix timestamp
         )
 
@@ -124,4 +125,5 @@ def get_emails():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # Create tables if they don't exist
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    
+    app.run(host='0.0.0.0', port=8000)
