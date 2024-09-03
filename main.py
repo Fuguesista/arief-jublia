@@ -72,7 +72,7 @@ def cancel_email(email_id):
             return redirect(url_for('manage_emails'))
 
         email.is_canceled = True
-        email.time_cancel = int(datetime.utcnow().timestamp())
+        email.time_cancel = int(datetime.now().timestamp())
         db.session.commit()
 
         return redirect(url_for('manage_emails'))
